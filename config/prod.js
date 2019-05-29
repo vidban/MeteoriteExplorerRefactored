@@ -1,5 +1,4 @@
 module.exports = {
   PORT: process.env.PORT,
-  apptoken: process.env.APP_TOKEN,
-  apiendpoint: process.env.API_ENDPOINT,
+  APP_TOKEN: process.env.APP_TOKEN,
 };
