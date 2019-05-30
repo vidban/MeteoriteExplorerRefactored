@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MeteoriteList from './components/MeteoriteList';
 import Loading from './components/Loading';
+import axios from 'axios';
 
 function App() {
   const [meteorites, setMeteorites] = useState([]);
@@ -19,7 +20,8 @@ function App() {
   useEffect(() => {
     if (!meteorites.length) {
       const callApi = async () => {
-        await fetch('/api')
+        await axios
+          .get('/api')
           .then((response) => {
             console.log(response.data);
             console.log(sortByName(response.data));
@@ -27,7 +29,7 @@ function App() {
             setLoading(false);
           })
           .catch((error) => {
-            console.log(error);
+            alert(error);
           });
       };
       callApi();
