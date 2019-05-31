@@ -19,22 +19,36 @@ function App() {
   }
   useEffect(() => {
     if (!meteorites.length) {
-      const callApi = async () => {
-        await axios
-          .get('/api')
-          .then((response) => {
-            console.log(response.data);
-            console.log(sortByName(response.data));
-            !meteorites.length && setMeteorites(sortByName(response.data));
-            setLoading(false);
-          })
-          .catch((error) => {
-            alert(error);
-          });
-      };
-      callApi();
+      // const callApi = async () => {
+      //   await axios
+      //     .get('/api')
+      //     .then((response) => {
+      //       console.log(response.data);
+      //       !meteorites.length && setMeteorites(sortByName(response.data));
+      //       setLoading(false);
+      //     })
+      //     .catch((error) => {
+      //       alert(error);
+      //     });
+      // };
+      callApi()
+        .then((res) => {
+          console.log(res);
+          setMeteorites(sortByName(res));
+          setLoading(false);
+        })
+        .catch((err) => console.log(err));
     }
   });
+
+  const callApi = async () => {
+    const response = await fetch('/api');
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
+  };
   return (
     <div className="Container text-center">
       <h1>Meteorite Explorer</h1>
